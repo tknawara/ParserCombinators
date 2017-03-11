@@ -38,7 +38,7 @@ import edu.parsec.parser.combinators.Combinators;
 public Parser<JStr> JStrParser() {
 	Parser<Character> quote = ParserBuilder.parseChar('\"');
 	Parser<String> str = Combinators.stringParser();
-	return cleanRun(quote.then(str).skip(quote)).map(JStr::new);
+	return quote.then(str).skip(quote).map(JStr::new);
 }
 ```
 

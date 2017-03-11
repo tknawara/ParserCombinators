@@ -16,9 +16,10 @@ Basic understanding of how parser combinators works, like how to "And" two parse
 ## Examples
 ### example 1
 ```java
+import edu.parsec.data.list.IList;
 import edu.parsec.parser.imp.Parser;
-import edu.parsec.parser.combinators.ParserBuilder;
 import edu.parsec.parser.combinators.Combinators;
+import edu.parsec.parser.combinators.ParserBuilder;
 
 public class IntegerParser {
 	public Parser<Integer> integerParser() {

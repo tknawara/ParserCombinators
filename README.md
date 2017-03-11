@@ -25,7 +25,7 @@ public class IntegerParser {
 	public Parser<Integer> integerParser() {
 		Parser<Character> digitParser = ParserBuilder.anyCharOf("0123456789");
 		Parser<IList<Character>> digits = Combinators.many1(digitParser);
-		return digits.map(x -> x.foldLeft("", (acc, c) -> acc String.valueOf(c))).map(Integer::parseInt);
+		return digits.map(x -> x.foldLeft("", (acc, c) -> acc + String.valueOf(c))).map(Integer::parseInt);
 	}
 }
 ```
@@ -36,9 +36,9 @@ import edu.parsec.parser.combinators.ParserBuilder;
 import edu.parsec.parser.combinators.Combinators;
 
 public Parser<JStr> JStrParser() {
-		Parser<Character> quote = ParserBuilder.parseChar('\"');
-		Parser<String> str = Combinators.stringParser();
-		return cleanRun(quote.then(str).skip(quote)).map(JStr::new);
+	Parser<Character> quote = ParserBuilder.parseChar('\"');
+	Parser<String> str = Combinators.stringParser();
+	return cleanRun(quote.then(str).skip(quote)).map(JStr::new);
 }
 ```
 

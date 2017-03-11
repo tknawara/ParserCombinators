@@ -14,9 +14,11 @@ This is a simple try to do these stuff in java.
 Basic understanding of how parser combinators works, like how to "And" two parser.
 
 ## Examples
-### Example 1
+### example 1
 ```java
 import edu.parsec.parser.imp.Parser;
+import edu.parsec.parser.combinators.ParserBuilder;
+import edu.parsec.parser.combinators.Combinators;
 
 public class IntegerParser {
 	public Parser<Integer> integerParser() {
@@ -26,7 +28,7 @@ public class IntegerParser {
 	}
 }
 ```
-### Example 2
+### example 2
 ```java
 import edu.parsec.examples.json.data.JStr;
 import edu.parsec.parser.combinators.ParserBuilder;

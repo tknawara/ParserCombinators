@@ -2,6 +2,12 @@ package edu.parsec.typeclass;
 
 import java.util.function.Function;
 
+/**
+ * Interface to represent the applicative functor.
+ *
+ * @param <T> type of the functor
+ * @param <AClass>
+ */
 public interface Applicative<T, AClass extends Applicative<?, AClass>> extends Functor<T, AClass> {
 
 	/**

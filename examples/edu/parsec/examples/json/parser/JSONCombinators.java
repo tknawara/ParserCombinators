@@ -53,7 +53,7 @@ public class JSONCombinators {
 		Parser<Character> openBrace = cleanRun(ParserBuilder.parseChar('{'));
 		Parser<Character> closeBrace = cleanRun(ParserBuilder.parseChar('}'));
 		Parser<String> str = cleanRun(quote.then(Combinators.stringParser()).skip(quote));
-		Parser<Pair<String, JSON>> binding = str.skip(colon).and(() -> JsonParser()).skip(commas);
+		Parser<Pair<String, JSON>> binding = str.skip(colon).and(JSONCombinators::JsonParser).skip(commas);
 		Parser<JObj> body = Combinators.many(binding).map(l -> {
 			Map<String, JSON> bindings = toMap(l);
 			return new JObj(bindings);
@@ -73,7 +73,8 @@ public class JSONCombinators {
 
 	public static Parser<JSON> JsonParser() {
 		Parser<JSON> jNullParser = JNullParser().map(x -> x);
-		return jNullParser.or(() -> JBoolParser()).or(() -> JNumParser()).or(() -> JStrParser()).or(() -> JSeqParser()).or(() -> JObjParser());
+		return jNullParser.or(JSONCombinators::JBoolParser).or(JSONCombinators::JNumParser)
+				.or(JSONCombinators::JStrParser).or(JSONCombinators::JSeqParser).or(JSONCombinators::JObjParser);
 	}
 
 	private static Map<String, JSON> toMap(IList<Pair<String, JSON>> l) {

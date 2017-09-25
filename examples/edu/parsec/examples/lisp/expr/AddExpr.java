@@ -24,4 +24,9 @@ public class AddExpr implements Expr {
     public double eval() {
         return leftExpr.eval() + rightExpr.eval();
     }
+
+    @Override
+    public String toString() {
+        return leftExpr + " + " + rightExpr;
+    }
 }

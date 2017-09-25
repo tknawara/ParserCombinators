@@ -21,4 +21,9 @@ public class Value implements Expr {
     public double eval() {
         return value;
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }

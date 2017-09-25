@@ -25,4 +25,9 @@ public class MulExpr implements Expr {
     public double eval() {
         return this.leftExpr.eval() * this.rightExpr.eval();
     }
+
+    @Override
+    public String toString() {
+        return leftExpr + " * " + rightExpr;
+    }
 }

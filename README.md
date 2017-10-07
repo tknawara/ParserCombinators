@@ -18,7 +18,7 @@ Basic understanding of how parser combinators works, like how to "And" two parse
 ```java
 import edu.parsec.data.list.IList;
 import edu.parsec.parser.imp.Parser;
-import edu.parsec.parser.combinators.Combinators;
+import edu.parsec.parser.combinators.Combinator;
 import edu.parsec.parser.combinators.ParserBuilder;
 
 public class IntegerParser {
@@ -33,7 +33,7 @@ public class IntegerParser {
 ```java
 import edu.parsec.examples.json.data.JStr;
 import edu.parsec.parser.combinators.ParserBuilder;
-import edu.parsec.parser.combinators.Combinators;
+import edu.parsec.parser.combinators.Combinator;
 
 public Parser<JStr> JStrParser() {
 	Parser<Character> quote = ParserBuilder.parseChar('\"');

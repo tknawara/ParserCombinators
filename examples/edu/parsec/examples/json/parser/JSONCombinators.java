@@ -13,14 +13,14 @@ import edu.parsec.examples.json.data.JObj;
 import edu.parsec.examples.json.data.JSON;
 import edu.parsec.examples.json.data.JSeq;
 import edu.parsec.examples.json.data.JStr;
+import edu.parsec.parser.combinators.Combinator;
 import edu.parsec.parser.combinators.ParserBuilder;
-import edu.parsec.parser.combinators.Combinators;
 import edu.parsec.parser.imp.Parser;
 
 public class JSONCombinators {
 
 	private static <T> Parser<T> cleanRun(Parser<T> parser) {
-		Parser<Unit> spaces = Combinators.spaces();
+		Parser<Unit> spaces = Combinator.spaces();
 		return spaces.then(parser).skip(spaces);
 	}
 
@@ -36,25 +36,25 @@ public class JSONCombinators {
 	}
 
 	public static Parser<JNum> JNumParser() {
-		return cleanRun(Combinators.doubleParser()).map(JNum::new);
+		return cleanRun(Combinator.doubleParser()).map(JNum::new);
 	}
 
 	public static Parser<JStr> JStrParser() {
 		Parser<Character> quote = ParserBuilder.parseChar('\"');
-		Parser<String> str = Combinators.stringParser();
+		Parser<String> str = Combinator.stringParser();
 		return cleanRun(quote.then(str).skip(quote)).map(JStr::new);
 	}
 
 	public static Parser<JObj> JObjParser() {
 		Parser<Character> colon = cleanRun(ParserBuilder.parseChar(':'));
 		Parser<Character> comma = cleanRun(ParserBuilder.parseChar(','));
-		Parser<IList<Character>> commas = Combinators.many(comma);
+		Parser<IList<Character>> commas = Combinator.many(comma);
 		Parser<Character> quote = cleanRun(ParserBuilder.parseChar('\"'));
 		Parser<Character> openBrace = cleanRun(ParserBuilder.parseChar('{'));
 		Parser<Character> closeBrace = cleanRun(ParserBuilder.parseChar('}'));
-		Parser<String> str = cleanRun(quote.then(Combinators.stringParser()).skip(quote));
+		Parser<String> str = cleanRun(quote.then(Combinator.stringParser()).skip(quote));
 		Parser<Pair<String, JSON>> binding = str.skip(colon).and(JSONCombinators::JsonParser).skip(commas);
-		Parser<JObj> body = Combinators.many(binding).map(l -> {
+		Parser<JObj> body = Combinator.many(binding).map(l -> {
 			Map<String, JSON> bindings = toMap(l);
 			return new JObj(bindings);
 		});
@@ -66,8 +66,8 @@ public class JSONCombinators {
 		Parser<Character> openBracket = cleanRun(ParserBuilder.parseChar('['));
 		Parser<Character> closeBracket = cleanRun(ParserBuilder.parseChar(']'));
 		Parser<Character> comma = cleanRun(ParserBuilder.parseChar(','));
-		Parser<IList<Character>> commas = Combinators.many(comma);
-		Parser<IList<JSON>> token = Combinators.many(JsonParser().skip(commas));
+		Parser<IList<Character>> commas = Combinator.many(comma);
+		Parser<IList<JSON>> token = Combinator.many(JsonParser().skip(commas));
 		return openBracket.then(token).skip(closeBracket).map(JSeq::new);
 	}
 

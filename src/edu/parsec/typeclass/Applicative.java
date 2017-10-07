@@ -17,7 +17,7 @@ public interface Applicative<T, AClass extends Applicative<?, AClass>> extends F
 	 *            the value to lift inside an applicative
 	 * @return an Applicative of this value
 	 */
-	public <B> Applicative<B, AClass> pure(B value);
+	<B> Applicative<B, AClass> pure(B value);
 
 	/**
 	 * Apply a function wrapped inside a Applicative to the current monad the
@@ -33,5 +33,5 @@ public interface Applicative<T, AClass extends Applicative<?, AClass>> extends F
 	 * @return a new monad that is the result of mapping the wrapped function
 	 *         over the current applicative
 	 */
-	public <C> Applicative<C, AClass> apply(Applicative<Function<T, C>, AClass> fM);
+	<C> Applicative<C, AClass> apply(Applicative<Function<T, C>, AClass> fM);
 }

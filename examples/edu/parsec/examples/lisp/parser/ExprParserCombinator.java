@@ -2,21 +2,19 @@ package edu.parsec.examples.lisp.parser;
 
 import edu.parsec.data.unit.Unit;
 import edu.parsec.examples.lisp.expr.*;
-import edu.parsec.parser.combinators.Combinators;
+import edu.parsec.parser.combinators.Combinator;
 import edu.parsec.parser.combinators.ParserBuilder;
 import edu.parsec.parser.imp.Parser;
-
-import java.util.function.Function;
 
 public class ExprParserCombinator {
 
     private static <T> Parser<T> cleanRun(Parser<T> parser) {
-        Parser<Unit> spaces = Combinators.spaces();
+        Parser<Unit> spaces = Combinator.spaces();
         return spaces.then(parser).skip(spaces);
     }
 
     public static Parser<Value> valueParser() {
-        return cleanRun(Combinators.doubleParser().map(Value::new));
+        return cleanRun(Combinator.doubleParser().map(Value::new));
     }
 
     public static Parser<AddExpr> addExprParser() {

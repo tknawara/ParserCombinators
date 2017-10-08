@@ -24,6 +24,9 @@ import java.util.stream.Collectors;
  */
 public class ParserBuilder {
 
+    private ParserBuilder() {
+    }
+
     /**
      * Given a string, this method will return a parser that when run will
      * return success if it manages to parse the string from the input
@@ -41,7 +44,7 @@ public class ParserBuilder {
      * Get a parser that when run will return unit
      *
      * @return unit
-     * @see {@link Unit}
+     * @see Unit
      */
     public static Parser<Unit> UnitParser() {
         final Function<IList<Character>, Result<Pair<Unit, IList<Character>>>> innerFunc = inputChars -> {
@@ -87,12 +90,12 @@ public class ParserBuilder {
      * Same as {@code anyCharOf(List<Character> validChars)} but builds the
      * parser from string
      *
-     * @param choices
+     * @param choices all the possible accepted values
      * @return a parser that when run will parser any character of the given
      * string
      */
     public static Parser<Character> anyCharOf(final String choices) {
-        List<Character> validChars = choices.chars().mapToObj(e -> (char)e)
+        List<Character> validChars = choices.chars().mapToObj(e -> (char) e)
                 .collect(Collectors.toList());
         return ParserBuilder.anyCharOf(validChars);
     }
@@ -116,6 +119,18 @@ public class ParserBuilder {
         Parser<IList<Character>> digits = Combinator.many1(digitParser());
         return digits.map(x -> x.foldLeft("", (acc, c) -> acc + String.valueOf(c)))
                 .map(Integer::parseInt);
+    }
+
+    /**
+     * Create a parser that don't care about spaces in the input.
+     *
+     * @param parser target parser
+     * @param <T> type of element returned by the target parser
+     * @return a new parser that skips spaces in the input
+     */
+    public static <T> Parser<T> noSpacesParser(final Parser<T> parser) {
+        Parser<Unit> spaces = Combinator.spaces();
+        return spaces.then(parser).skip(spaces);
     }
 
     /**

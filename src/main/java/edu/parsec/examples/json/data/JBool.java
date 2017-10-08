@@ -1,9 +1,14 @@
 package edu.parsec.examples.json.data;
 
-public class JBool extends JSON {
+/**
+ * Representation of Json boolean value.
+ *
+ * @author Tarek Nawara
+ */
+public class JBool extends Json {
 	public final boolean b;
 	
-	public JBool(boolean b) {
+	public JBool(final boolean b) {
 		this.b = b;
 	}
 	

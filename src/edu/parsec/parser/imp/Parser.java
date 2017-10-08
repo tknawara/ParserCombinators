@@ -9,7 +9,6 @@ import edu.parsec.data.pair.Pair;
 import edu.parsec.data.result.Failure;
 import edu.parsec.data.result.Result;
 import edu.parsec.data.result.Success;
-import edu.parsec.parser.combinators.ParserByName;
 import edu.parsec.typeclass.Monad;
 
 /**

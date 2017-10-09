@@ -62,7 +62,7 @@ public class Empty<T> implements IList<T> {
 
 	@Override
 	public Iterator<T> iterator() {
-		return new Iterator<>() {
+		return new Iterator<T>() {
 
 			@Override
 			public boolean hasNext() {

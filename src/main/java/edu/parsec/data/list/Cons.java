@@ -1,6 +1,7 @@
 package edu.parsec.data.list;
 
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -135,5 +136,24 @@ public class Cons<T> implements IList<T> {
         }
         sb.append(current.head().toString());
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cons<?> cons = (Cons<?>) o;
+        return equalLists(this, cons);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(head, tail);
+    }
+
+    private static boolean equalLists(final IList first, final IList second) {
+        if (first.isEmpty() && second.isEmpty()) return true;
+        if (first.isEmpty() || second.isEmpty()) return false;
+        return first.head().equals(second.head()) && equalLists(first.tail(), second.tail());
     }
 }
